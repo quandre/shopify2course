@@ -1,0 +1,335 @@
+<div class="collection collection1">
+	<div class="container">
+		<div class="row">
+    {%- for block in section.blocks -%}
+			<div class="{{ section.settings.xxl_col }} {{ section.settings.xl_col }} {{ section.settings.lg_col }} {{ section.settings.md_col }} {{ section.settings.sm_col }}">
+				<div class="collection1__collection-item">
+          {% assign opacity = section.settings.opacity | divided_by: 100.00 %}
+          <div class="collection1__product-img collection1__product-img--{{ section.settings.container_shape }} collection1__product-img--{{ section.settings.image_fit }} " style="background-color: {{ section.settings.background  | color_modify: 'alpha', opacity }}" >
+            {%- if block.settings.collection.image != blank -%}
+              <a href="{{ block.settings.collection.url }}" class="img-link">
+                <img srcset="{%- if block.settings.collection.image.width >= 165 -%}{{ block.settings.collection.image | img_url: '165x' }} 165w,{%- endif -%}
+                  {%- if block.settings.collection.image.width >= 360 -%}{{ block.settings.collection.image | img_url: '360x' }} 360w,{%- endif -%}
+                  {%- if block.settings.collection.image.width >= 535 -%}{{ block.settings.collection.image | img_url: '535x' }} 535w,{%- endif -%}
+                  {%- if block.settings.collection.image.width >= 720 -%}{{ block.settings.collection.image | img_url: '720x' }} 720w,{%- endif -%}
+                  {%- if block.settings.collection.image.width >= 940 -%}{{ block.settings.collection.image | img_url: '940x' }} 940w,{%- endif -%}
+                  {%- if block.settings.collection.image.width >= 1070 -%}{{ block.settings.collection.image | img_url: '2000x' }} 2000w{%- endif -%}"
+                  src="{{ block.settings.collection.image | img_url: '533x' }}"
+                  sizes="(min-width: 1100px) 2000px, (min-width: 750px) calc((100vw - 130px) / 2), calc((100vw - 50px) / 2)"
+                  alt="{{ block.settings.collection.image.alt | escape }}"
+                  loading="lazy"
+                  width="{{ block.settings.collection.image.width }}"
+                  height="{{ block.settings.collection.image.height }}"
+                  class="hero1__bg"
+                >
+              </a>
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+					</div>
+					<div class="collection1__product-info">
+						<div class="collection1__product-details" style="text-align: center; width: 100%;">
+              {%- if section.settings.show_title == true -%}
+							  <span class="collection1__product-title">{{ block.settings.collection.title }}</span>
+              {%- endif -%}
+              {%- if section.settings.show_price == true -%}
+							  <span class="collection1__product-price">${{ product.price }}</span>
+              {%- endif -%}
+						</div>
+						<div class="collection1__colors">
+							<div class="collection1__color collection1__color--blue"></div>
+							<div class="collection1__color collection1__color--black"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+    {%- endfor %}
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Group",
+  "class": "spaced-section spaced-section--full-width",
+  "settings": [
+    { 
+      "type": "select",
+      "id": "container_shape",
+      "options": [
+        {
+          "value": "rectangle",
+          "label": "Rectangle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        }
+      ],
+      "default": "square",
+      "label": "Product Container Shape"
+    },
+    { 
+      "type": "select",
+      "id": "image_fit",
+      "options": [
+        {
+          "value": "cover",
+          "label": "Cover"
+        },
+        {
+          "value": "contain",
+          "label": "Contain"
+        }
+      ],
+      "default": "contain",
+      "label": "Product Image Fit"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Color Opacity",
+      "default": 50
+    },
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "xxl_col",
+      "options": [
+        {
+          "value": "col-xxl-6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "col-xxl-4",
+          "label": "3 Columns"
+        },
+        {
+          "value": "col-xxl-3",
+          "label": "4 Columns"
+        },
+        {
+          "value": "col-xxl-2",
+          "label": "6 Columns"
+        }
+      ],
+      "default": "col-xxl-4",
+      "label": "XX Large Devices"
+    },
+    {
+      "type": "select",
+      "id": "xl_col",
+      "options": [
+        {
+          "value": "col-xl-6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "col-xl-4",
+          "label": "3 Columns"
+        },
+        {
+          "value": "col-xl-3",
+          "label": "4 Columns"
+        },
+        {
+          "value": "col-xl-2",
+          "label": "6 Columns"
+        }
+      ],
+      "default": "col-xl-4",
+      "label": "Extra Large Devices"
+    },
+    {
+      "type": "select",
+      "id": "lg_col",
+      "options": [
+        {
+          "value": "col-lg-6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "col-lg-4",
+          "label": "3 Columns"
+        },
+        {
+          "value": "col-lg-3",
+          "label": "4 Columns"
+        },
+        {
+          "value": "col-lg-2",
+          "label": "6 Columns"
+        }
+      ],
+      "default": "col-lg-4",
+      "label": "Large Devices"
+    },
+    {
+      "type": "select",
+      "id": "md_col",
+      "options": [
+        {
+          "value": "col-md-6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "col-md-4",
+          "label": "3 Columns"
+        },
+        {
+          "value": "col-md-3",
+          "label": "4 Columns"
+        },
+        {
+          "value": "col-md-2",
+          "label": "6 Columns"
+        }
+      ],
+      "default": "col-md-4",
+      "label": "Medium Devices"
+    },
+    {
+      "type": "select",
+      "id": "sm_col",
+      "options": [
+        {
+          "value": "col-sm-6",
+          "label": "2 Columns"
+        },
+        {
+          "value": "col-sm-4",
+          "label": "3 Columns"
+        },
+        {
+          "value": "col-sm-3",
+          "label": "4 Columns"
+        },
+        {
+          "value": "col-sm-2",
+          "label": "6 Columns"
+        }
+      ],
+      "default": "col-sm-6",
+      "label": "Small Devices"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "t:sections.image-with-text.blocks.heading.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        { 
+          "type": "select",
+          "id": "title_size",
+          "options": [
+            {
+              "value": "sm",
+              "label": "Small"
+            },
+            {
+              "value": "md",
+              "label": "Medium"
+            },
+            {
+              "value": "lg",
+              "label": "Large"
+            },
+            {
+              "value": "xl",
+              "label": "Extra Large"
+            }
+          ],
+          "default": "md",
+          "label": "Font Size"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "name": "paragraph",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "paragraph",
+          "label": "paragraph",
+          "default":"Example message I'm baby health goth hoodie plaid cardigan activated charcoal banjo normcore gastropub adaptogen slow-carb poke 8-bit. Helvetica blog aesthetic banjo heirloom 90's tousled listicle pop-up cred photo booth vexillologist flexitarian freegan letterpress."
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "t:sections.image-with-text.blocks.button.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_label",
+          "default": "Button label",
+          "label": "t:sections.image-with-text.blocks.button.settings.button_label.label",
+          "info": "t:sections.image-with-text.blocks.button.settings.button_label.info"
+        },
+        {  
+          "type": "url",
+          "id": "button_link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "t:sections.collection-list.blocks.featured_collection.name",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "t:sections.collection-list.blocks.featured_collection.settings.collection.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Group",
+      "blocks": [
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        },
+        {
+          "type": "featured_collection"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
